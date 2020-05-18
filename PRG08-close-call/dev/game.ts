@@ -3,8 +3,8 @@ namespace CloseCall {
     export class Game {
     
         // Fields
-        private cars    : Car[]     = []
-        private rocks   : Rock[]    = []
+        // cars & rocks collection can be replaced with a gameObject collection.    
+        private gameObjects : GameObject[] = []
         private score   : number    = 0
         private request : number    = 0
         private gameover: boolean   = false
@@ -17,37 +17,35 @@ namespace CloseCall {
     
             this.gameLoop()
         }
-    
+        
+        //replace cars and rocks array with gameObject array
         private addCarWithRock(index : number) {
-            this.cars.push(new Car(index, this))
-            this.rocks.push(new Rock(index))
+            this.gameObjects.push(new Car(index, this))
+            this.gameObjects.push(new Rock(index))
         }
     
         private gameLoop(){
-            for(let car of this.cars){
-                car.move()
-            }
-            for(let rock of this.rocks) {
-                rock.move()
+            for(const gameObject of this.gameObjects){
+                gameObject.move();
             }
     
             this.checkCollision()
             
             this.request = requestAnimationFrame(() => this.gameLoop())
         }
-    
+        
+        //this needs to loop through the gameObject collection.
         private checkCollision() {
-            for(let car of this.cars) {
-                for(let rock of this.rocks) {
-                    if(car.hasCollision(rock as GameObject)) {
-                        car.onCollision(rock);
-                        this.gameOver()
+            for(const gameObject1 of this.gameObjects) {
+                for(let gameObject2 of this.gameObjects) {
+                    if(gameObject1.hasCollision(gameObject2)) {
+                        gameObject1.onCollision(gameObject2);
                     }
                 }
             }
         }
     
-        private gameOver() : void{
+        public gameOver() : void{
             this.gameover = true
             document.getElementById("score").innerHTML = "Game Over"
             cancelAnimationFrame(this.request)

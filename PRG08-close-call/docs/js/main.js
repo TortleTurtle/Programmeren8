@@ -31,7 +31,7 @@ var CloseCall;
                 this.Y + this.Height > gameObject.Y);
         }
         move() {
-            this.x++;
+            this.draw();
         }
         draw() {
             this.style.transform = `translate(${this.X}px,${this.Y}px)`;
@@ -57,8 +57,7 @@ var CloseCall;
 (function (CloseCall) {
     class Game {
         constructor() {
-            this.cars = [];
-            this.rocks = [];
+            this.gameObjects = [];
             this.score = 0;
             this.request = 0;
             this.gameover = false;
@@ -68,25 +67,21 @@ var CloseCall;
             this.gameLoop();
         }
         addCarWithRock(index) {
-            this.cars.push(new CloseCall.Car(index, this));
-            this.rocks.push(new CloseCall.Rock(index));
+            this.gameObjects.push(new CloseCall.Car(index, this));
+            this.gameObjects.push(new CloseCall.Rock(index));
         }
         gameLoop() {
-            for (let car of this.cars) {
-                car.move();
-            }
-            for (let rock of this.rocks) {
-                rock.move();
+            for (const gameObject of this.gameObjects) {
+                gameObject.move();
             }
             this.checkCollision();
             this.request = requestAnimationFrame(() => this.gameLoop());
         }
         checkCollision() {
-            for (let car of this.cars) {
-                for (let rock of this.rocks) {
-                    if (car.hasCollision(rock)) {
-                        car.onCollision(rock);
-                        this.gameOver();
+            for (const gameObject1 of this.gameObjects) {
+                for (let gameObject2 of this.gameObjects) {
+                    if (gameObject1.hasCollision(gameObject2)) {
+                        gameObject1.onCollision(gameObject2);
                     }
                 }
             }
@@ -132,14 +127,17 @@ var CloseCall;
                 this.g = 0;
                 this.rotationSpeed = 0;
             }
-            this.draw();
+            super.move();
         }
         crash(carSpeed) {
             this.g = 9.81;
             this.speed = carSpeed;
             this.rotationSpeed = 5;
         }
-        onCollision() {
+        onCollision(gameObject) {
+            if (gameObject instanceof CloseCall.Car) {
+                this.crash(gameObject.Speed);
+            }
         }
     }
     CloseCall.Rock = Rock;
@@ -183,11 +181,13 @@ var CloseCall;
                 this.braking = false;
                 this.stopped = true;
             }
-            this.draw();
+            super.move();
         }
-        onCollision(rock) {
-            this.crash();
-            rock.crash(this.Speed);
+        onCollision(gameObject) {
+            if (gameObject instanceof CloseCall.Rock) {
+                this.crash();
+                this.game.gameOver();
+            }
         }
         crash() {
             this.speed = 0;

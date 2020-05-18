@@ -1,7 +1,10 @@
 namespace CloseCall {
     export abstract class GameObject extends HTMLElement {
+        //fields
         private x : number;
         private y : number;
+
+        //attributes
         public width : number;
         public height : number;
 
@@ -42,7 +45,7 @@ namespace CloseCall {
         }
 
         public move() : void {
-            this.x++; 
+            this.draw();
         }
 
         protected draw() : void {

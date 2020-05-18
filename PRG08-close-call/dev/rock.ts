@@ -32,7 +32,7 @@ namespace CloseCall {
             }
     
             //teken de div op de juiste positie
-            this.draw()
+            super.move();
         }
     
         public crash(carSpeed : number) {
@@ -41,8 +41,10 @@ namespace CloseCall {
             this.rotationSpeed = 5
         }
 
-        onCollision() {
-            //no idea why this is here.
+        onCollision(gameObject : GameObject) {
+            if(gameObject instanceof Car){
+                this.crash(gameObject.Speed);
+            }
         }
     }
     

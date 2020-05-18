@@ -59,12 +59,15 @@ namespace CloseCall {
                 this.braking = false
                 this.stopped = true
             }
-            this.draw()
+            
+            super.move();
         }
 
-        public onCollision(rock : Rock) : void {
-            this.crash();
-            rock.crash(this.Speed);
+        public onCollision(gameObject) : void {
+            if(gameObject instanceof Rock) {
+                this.crash();
+                this.game.gameOver();
+            }
         }
 
         public crash() {

@@ -13,7 +13,7 @@ namespace CloseCall {
         }
 
         onCollision(){
-            //no idea why this is here.
+            //this can be left empty.
         }
     }
 
