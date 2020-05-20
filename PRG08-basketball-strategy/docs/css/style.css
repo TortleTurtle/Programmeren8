@@ -1,0 +1,42 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px; padding: 0px;
+    overflow: hidden;
+}
+
+earthball-component, moonball-component {
+    background-image: url("../images/ball.png");
+    width: 100px; height: 100px;
+    position: absolute;
+}
+basketball-component {
+    background-image: url("../images/basketball.png");
+    width: 100px; height: 100px;
+    position: absolute;
+}
+
+.earth {
+    background-image: url("../images/earth.jpg");
+    /* width: 300px; height: 500px; */
+    display: block;
+}
+
+.moon {
+    background-image: url("../images/moon.jpg");
+}
+
+.space {
+    background-image: url("../images/space.jpg");
+}
+
+.row {
+    display: flex;
+    height: 100vh;
+}
+
+.column {
+    flex: 50%;
+}
