@@ -6,5 +6,5 @@ A project to refresh my memory on OOP.
 https://tortleturtle.github.io/Programmeren8/PRG08-close-call/docs/
 A assignment to Organise code better using inherintance and polymorphism.
 ## Basket Ball Strategy
-https://tortleturtle.github.io/Programmeren8/PRG08-close-call/docs/
+https://tortleturtle.github.io/Programmeren8/PRG08-basketball-strategy/docs/
 A assignment to get used to incapsulation and Strategy Patterns.
