@@ -32,7 +32,6 @@ var Jibby = (function () {
         configurable: true
     });
     Jibby.prototype.update = function () {
-        console.log(this.behaviour);
         this.behaviour.performBehavior();
     };
     return Jibby;

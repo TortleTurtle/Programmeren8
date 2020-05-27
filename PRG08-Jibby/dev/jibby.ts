@@ -33,7 +33,6 @@ class Jibby {
 
     public update():void {
     // hier het gedrag updaten
-        console.log(this.behaviour);
         this.behaviour.performBehavior();
     }
 }
