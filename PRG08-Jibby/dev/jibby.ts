@@ -20,7 +20,7 @@ class Jibby {
         // start instellingen
         this.x = 0
         this.y = 220
-        this.hygiene = this.food = this.happyness = 11
+        this.hygiene = this.food = this.happyness = 50
 
         this.behaviour = new Idle(this);
 

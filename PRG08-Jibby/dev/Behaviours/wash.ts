@@ -7,21 +7,21 @@ class Wash extends Behaviour {
         this.jibby.hygiene += 10;
         
         //Jibby wil be set back to Idle after 2 seconds
-        this.startTimer(this.duration)
+        this.startTimer(() => this.idle(), this.duration)
     }
     
-    performBehavior(): void {
+    public performBehavior(): void {
         this.jibby.food -= 0.02;
         this.jibby.happyness -= 0.015;
     }
-    public onWash(): void {
+    onWash(): void {
         console.log("You're already washing Jibby");
     }
-    public onEat(): void {
+    onEat(): void {
         this.stopTimer();
         super.onEat();
     }
-    public onPet(): void {
+    onPet(): void {
         this.stopTimer();
         this.angry();
     }

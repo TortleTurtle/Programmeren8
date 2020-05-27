@@ -4,7 +4,8 @@ class Sleep extends Behaviour {
         this.jibby.div.style.backgroundImage = "url('images/sleeping.png')";
     }
 
-    performBehavior(): void {
+    //all stat deduction is halved while Jibby is asleep.
+    public performBehavior(): void {
         this.jibby.hygiene -= 0.005;
         this.jibby.food -= 0.01;
         this.jibby.happyness -= 0.0075;

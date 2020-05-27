@@ -27,9 +27,9 @@ abstract class Behaviour {
         this.jibby.Behaviour = new Angry(this.jibby);
     }
 
-    protected startTimer(duration : number) : void {
+    protected startTimer(callBack : () => void ,duration : number) : void {
         //waarom een counter maken als je ook een bestaande functie kan gebruiken ;)
-        this.timerId = setTimeout(() => this.idle(), duration);
+        this.timerId = setTimeout(callBack, duration);
     }
     protected stopTimer() : void {
         clearTimeout(this.timerId);

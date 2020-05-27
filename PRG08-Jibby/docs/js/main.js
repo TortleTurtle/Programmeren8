@@ -19,7 +19,7 @@ var Jibby = (function () {
         parent.appendChild(this.div);
         this.x = 0;
         this.y = 220;
-        this.hygiene = this.food = this.happyness = 11;
+        this.hygiene = this.food = this.happyness = 50;
         this.behaviour = new Idle(this);
         this.div.addEventListener("click", function () { return _this.behaviour.onPet(); });
         document.getElementsByTagName("foodbutton")[0].addEventListener("click", function () { return _this.behaviour.onEat(); });
@@ -82,9 +82,8 @@ var Behaviour = (function () {
     Behaviour.prototype.angry = function () {
         this.jibby.Behaviour = new Angry(this.jibby);
     };
-    Behaviour.prototype.startTimer = function (duration) {
-        var _this = this;
-        this.timerId = setTimeout(function () { return _this.idle(); }, duration);
+    Behaviour.prototype.startTimer = function (callBack, duration) {
+        this.timerId = setTimeout(callBack, duration);
     };
     Behaviour.prototype.stopTimer = function () {
         clearTimeout(this.timerId);
@@ -169,7 +168,7 @@ var Eat = (function (_super) {
         _this.duration = 1000;
         _this.jibby.div.style.backgroundImage = "url('images/eating.gif')";
         _this.jibby.food += 10;
-        _this.startTimer(_this.duration);
+        _this.startTimer(function () { return _this.idle(); }, _this.duration);
         return _this;
     }
     Eat.prototype.performBehavior = function () {
@@ -210,9 +209,9 @@ var Idle = (function (_super) {
     __extends(Idle, _super);
     function Idle(jibby) {
         var _this = _super.call(this, jibby) || this;
-        _this.duration = 1000;
+        _this.duration = 5000;
         _this.jibby.div.style.backgroundImage = "url('images/idle.png')";
-        _this.startTimer(_this.duration);
+        _this.startTimer(function () { return _this.sleep(); }, _this.duration);
         return _this;
     }
     Idle.prototype.performBehavior = function () {
@@ -238,10 +237,6 @@ var Idle = (function (_super) {
             }
         }
     };
-    Idle.prototype.startTimer = function (duration) {
-        var _this = this;
-        this.timerId = setTimeout(function () { return _this.sleep(); }, duration);
-    };
     Idle.prototype.onWash = function () {
         this.stopTimer();
         _super.prototype.onWash.call(this);
@@ -260,10 +255,10 @@ var Pet = (function (_super) {
     __extends(Pet, _super);
     function Pet(jibby) {
         var _this = _super.call(this, jibby) || this;
-        _this.duration = 2000;
+        _this.duration = 1000;
         _this.jibby.div.style.backgroundImage = "url('images/happy.png')";
         _this.jibby.happyness += 2;
-        _this.startTimer(_this.duration);
+        _this.startTimer(function () { return _this.idle(); }, _this.duration);
         return _this;
     }
     Pet.prototype.performBehavior = function () {
@@ -279,9 +274,10 @@ var Pet = (function (_super) {
         _super.prototype.onEat.call(this);
     };
     Pet.prototype.onPet = function () {
+        var _this = this;
         this.jibby.happyness += 2;
         this.stopTimer();
-        this.startTimer(this.duration);
+        this.startTimer(function () { return _this.idle(); }, this.duration);
     };
     return Pet;
 }(Behaviour));
@@ -346,7 +342,7 @@ var Wash = (function (_super) {
         _this.duration = 2000;
         _this.jibby.div.style.backgroundImage = "url('images/washing.png')";
         _this.jibby.hygiene += 10;
-        _this.startTimer(_this.duration);
+        _this.startTimer(function () { return _this.idle(); }, _this.duration);
         return _this;
     }
     Wash.prototype.performBehavior = function () {

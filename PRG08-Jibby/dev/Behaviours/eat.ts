@@ -6,21 +6,21 @@ class Eat extends Behaviour {
         this.jibby.div.style.backgroundImage = "url('images/eating.gif')";
         this.jibby.food += 10;
 
-        this.startTimer(this.duration);
+        this.startTimer(() => this.idle(), this.duration);
     }
 
     public performBehavior(): void {
         this.jibby.hygiene -= 0.01
         this.jibby.happyness -= 0.015
     }
-    public onWash(): void {
+    onWash(): void {
         this.stopTimer();
         super.onWash();
     }
-    public onEat(): void {
+    onEat(): void {
         console.log("Jibby is already eating!");
     }
-    public onPet(): void {
+    onPet(): void {
         this.stopTimer();
         this.angry();
     }

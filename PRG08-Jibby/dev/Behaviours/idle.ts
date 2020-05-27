@@ -1,10 +1,10 @@
 class Idle extends Behaviour {
-    private duration : number = 1000;
+    private duration : number = 5000; //5 seconds
     
     constructor(jibby : Jibby) {
         super(jibby);
         this.jibby.div.style.backgroundImage = "url('images/idle.png')";
-        this.startTimer(this.duration);
+        this.startTimer(() => this.sleep(), this.duration);
     }
 
     public performBehavior(): void {
@@ -30,10 +30,6 @@ class Idle extends Behaviour {
                 this.jibby.Behaviour = new Sad(this.jibby);
             }
         }
-    }
-
-    protected startTimer(duration : number) {
-        this.timerId = setTimeout(() => this.sleep(), duration);
     }
 
     onWash() {
